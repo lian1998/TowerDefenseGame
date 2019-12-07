@@ -1,8 +1,8 @@
-class SceneEnd extends GuaScene {
+class SceneEnd extends TdScene {
     constructor(game) {
         super(game)
         game.registerAction('r', function(){
-            var s = SceneTitle.new(game)
+            var s = new SceneTitle(game)
             game.replaceScene(s)
         })
     }

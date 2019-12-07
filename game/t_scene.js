@@ -1,4 +1,4 @@
-class GuaScene {
+class TdScene {
     constructor(game) {
         this.game = game
     }

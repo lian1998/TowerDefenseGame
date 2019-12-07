@@ -22,7 +22,7 @@ var enableDebugMode = function(game, enable) {
             window.paused = !window.paused
         } else if ('1234567'.includes(k)) {
             // 为了 debug 临时加的载入关卡功能
-            blocks = loadLevel(game, Number(k))
+            // blocks = loadLevel(game, Number(k))
         }
     })
     // 控制速度
@@ -35,13 +35,19 @@ var enableDebugMode = function(game, enable) {
 
 var __main = function() {
     var images = {
-        ball: 'img/ball.png',
-        block: 'img/block.png',
-        paddle: 'img/paddle.png',
+        bullet: 'img/bullet.png',
+        cloud: 'img/block.png',
+        player: 'img/paddle.png',
+        sky: 'img/stage1.png',
     }
-    var game = GuaGame.instance(30, images, function(g){
-        var s = SceneTitle.new(g)
-        g.runWithScene(s)
+    // var game = TdGame.instance(30, images, function(g){
+    //     var s = new Scene(g)
+    //     g.runWithScene(s)
+    // })
+
+    var game = new TdGame(30, images, function (g) {
+      var s = new Scene(g)
+      g.runWithScene(s)
     })
 
     enableDebugMode(game, true)
