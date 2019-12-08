@@ -1,8 +1,8 @@
 class SceneTitle extends TdScene {
     constructor(game) {
         super(game)
-        game.registerAction('k', function(){
-            var s = Scene(game)
+        game.registerAction('k', function () {
+            var s = new Scene(game)
             game.replaceScene(s)
         })
     }

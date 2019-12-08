@@ -1,110 +1,169 @@
-class Player extends TdImage{
-  constructor(game) {
-    super(game, 'player')
-    this.setup()
-  }
-  setup() {
-    this.speed = 10
-  }
-  update() {
-
-  }
-  moveLeft() {
-    this.x -= this.speed
-  }
-  moveRight() {
-    this.x += this.speed
-  }
-  moveUp() {
-    this.y -= this.speed
-  }
-  moveDown() {
-    this.y += this.speed
-  }
+const config = {
+    player_speed: 10,
+    cloud_speed: 5,
+    enemy_speed: 5,
+    bullet_speed: 5,
 }
 
-function randomBetween (start, end) {
-  let n = Math.random() * (end - start + 1)
-  return Math.floor(n + start)
-}
-
-class Enemy extends TdImage{
-  constructor(game) {
-    let type = randomBetween(0, 4)
-    let name = 'enemy' + type
-    super(game, name)
-    this.setup()
-  }
-  setup() {
-    this.speed = randomBetween(2, 5)
-    this.x = randomBetween(0, 350)
-    this.y = -randomBetween(0, 200)
-  }
-  update() {
-    this.y += this.speed
-    if (this.y > 600) {
-      this.setup()
+class Bullet extends TdImage {
+    constructor(game) {
+        super(game, 'bullet')
+        this.setup()
     }
-  }
+    setup() {
+        this.speed = 2
+    }
+    update() {
+        this.y -= this.speed
+    }
+    debug() {
+        this.speed = config.bullet_speed
+    }
+}
+
+class Player extends TdImage {
+    constructor(game) {
+        super(game, 'player')
+        this.setup()
+    }
+    setup() {
+        // this.speed = 5
+        this.cooldown = 0
+    }
+    update() {
+        this.speed = config.player_speed
+        if (this.cooldown > 0) {
+            this.cooldown--
+        }
+    }
+    fire() {
+        if (this.cooldown == 0) {
+            this.cooldown = 3
+            let x = this.x + this.w / 2
+            let y = this.y
+            let b = new Bullet(this.game)
+            b.x = x
+            b.y = y
+            this.scene.addElement(b)
+        }
+    }
+    moveLeft() {
+        this.x -= this.speed
+    }
+    moveRight() {
+        this.x += this.speed
+    }
+    moveUp() {
+        this.y -= this.speed
+    }
+    moveDown() {
+        this.y += this.speed
+    }
+}
+
+
+
+class Enemy extends TdImage {
+    constructor(game) {
+        let type = randomBetween(0, 4)
+        let name = 'enemy' + type
+        super(game, name)
+        this.setup()
+    }
+    setup() {
+        this.speed = randomBetween(2, 5)
+        this.x = randomBetween(0, 350)
+        this.y = -randomBetween(0, 200)
+    }
+    update() {
+        this.y += this.speed
+        if (this.y > 600) {
+            this.setup()
+        }
+    }
+}
+
+class Cloud extends TdImage {
+    constructor(game) {
+        super(game, 'cloud')
+        this.setup()
+    }
+    setup() {
+        this.speed = 1
+        this.x = randomBetween(0, 350)
+        this.y = -randomBetween(0, 200)
+    }
+    update() {
+        this.y += this.speed
+        if (this.y > 600) {
+            this.setup()
+        }
+    }
 }
 
 class Scene extends TdScene {
-  constructor(game) {
-    super(game)
-    this.setup()
-    this.setupInputs()
-  }
-  setup() {
-    this.numberOfElemies = 10
-    this.bg = new TdImage(this.game, 'sky')
-    this.cloud = new TdImage(this.game, 'cloud')
-    // this.player = new TdImage(this.game, 'player')
-    this.player = new Player(this.game)
-    this.player.x = 100
-    this.player.y = 150
-    // this.game.registerAction('f', function () {
-    //   ball.fire()
-    // })
-
-    // game.registerAction('k', function () {
-    //   var s = Scene(game)
-    //   game.replaceScene(s)
-    // })
-    this.addElement(this.bg)
-    this.addElement(this.player)
-    this.addElement(this.cloud)
-    this.addElemies()
-  }
-  addElemies() {
-    let es = []
-    for (let i = 0; i < this.numberOfElemies; i++) {
-      const e = new Enemy(this.game)
-      es.push(e)
-      this.addElement(e)
+    constructor(game) {
+        super(game)
+        this.setup()
+        this.setupInputs()
     }
-    this.elemies = es
-  }
-  //输入指令
-  setupInputs() {
-    // let g = this.game
-    let that = this
-    that.game.registerAction('a', function () {
-      that.player.moveLeft()
-    })
-    that.game.registerAction('d', function () {
-      that.player.moveRight()
-    })
-    that.game.registerAction('w', function () {
-      that.player.moveUp()
-    })
-    that.game.registerAction('s', function () {
-      that.player.moveDown()
-    })
-  }
-  update() {
-    super.update()
-    this.cloud.y += 1
-  }
+    setup() {
+        this.numberOfElemies = 10
+        this.bg = new TdImage(this.game, 'sky')
+        this.cloud = new Cloud(this.game)
+        // this.player = new TdImage(this.game, 'player')
+        this.player = new Player(this.game)
+        this.player.x = 100
+        this.player.y = 150
+        // this.game.registerAction('f', function () {
+        //   ball.fire()
+        // })
+
+        // game.registerAction('k', function () {
+        //   var s = Scene(game)
+        //   game.replaceScene(s)
+        // })
+        this.addElement(this.bg)
+        this.addElement(this.player)
+        this.addElement(this.cloud)
+        this.addEnemies()
+    }
+    //敌人
+    addEnemies() {
+        let es = []
+        for (let i = 0; i < this.numberOfElemies; i++) {
+            const e = new Enemy(this.game)
+            es.push(e)
+            this.addElement(e)
+        }
+        this.elemies = es
+    }
+    //输入指令
+    setupInputs() {
+        // let g = this.game
+        let that = this
+        that.game.registerAction('a', function () {
+            that.player.moveLeft()
+        })
+        that.game.registerAction('d', function () {
+            that.player.moveRight()
+        })
+        that.game.registerAction('w', function () {
+            that.player.moveUp()
+        })
+        that.game.registerAction('s', function () {
+            that.player.moveDown()
+        })
+        that.game.registerAction('j', function () {
+            that.player.fire()
+        })
+    }
+
+    //在g.update中自动调用
+    update() {
+        super.update()
+        // this.cloud.y += 1
+    }
 }
 
 
