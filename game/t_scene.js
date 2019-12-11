@@ -12,11 +12,13 @@ class TdScene {
         e.scene = this
         this.elements.push(e)
     }
+    removeElement(node) {
+        this.elements = this.elements.filter(e => e != node)
+    }
     draw() {
-        for (let i = 0; i < this.elements.length; i++) {
-            const e = this.elements[i]
-            this.game.drawImage(e)
-        }
+        for (const e of this.elements) {
+            e.draw()
+        }   
     }
     update() {
         if (this.debugModeEnabled) {
@@ -30,4 +32,5 @@ class TdScene {
             e.update()
         }
     }
+
 }

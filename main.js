@@ -35,24 +35,14 @@ var enableDebugMode = function (game, enable) {
 
 var __main = function () {
     var images = {
-        bullet: 'img/bullet.png',
-        cloud: 'img/block.png',
-        player: 'img/paddle.png',
-        sky: 'img/stage1.png',
-        enemy0: 'img/loader.png',
-        enemy1: 'img/loader.png',
-        enemy2: 'img/loader.png',
-        enemy3: 'img/loader.png',
-        enemy4: 'img/loader.png',
+        bg: 'img/grasslands_grid.png',
+        gun: 'img/gun.jpg',
+        tower_gun_0: 'img/gun.jpg',
+        // tower_gun_0: 'img/tower_gun_0.png',
     }
-    // var game = TdGame.instance(30, images, function(g){
-    //     var s = new Scene(g)
-    //     g.runWithScene(s)
-    // })
-
     var game = new TdGame(30, images, function (g) {
-        // var s = new Scene(g)
-        var s = new SceneTitle(g)
+        var s = new Scene(g)
+        // var s = new SceneTitle(g)
         g.runWithScene(s)
     })
 

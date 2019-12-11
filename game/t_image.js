@@ -8,12 +8,14 @@ class TdImage {
         this.h = this.texture.height
 
     }
-    // static new(game, name) {
-    //     var i = new this(game, name)
-    //     return i
-    // }
-    draw() {
 
+    pointInFrame(x, y) {
+        let xIn = x >= this.x && x <= this.x + this.w
+        let yIn = y >= this.y && y <= this.y + this.h
+        return xIn && yIn
+    }
+    draw() {
+        this.game.drawImage(this)
     }
     update() {
 

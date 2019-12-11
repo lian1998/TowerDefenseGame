@@ -7,38 +7,59 @@ class TdGame {
         this.scene = null
         this.actions = {}
         this.keydowns = {}
+        this.mouseActions = []
         this.canvas = document.querySelector('#id-canvas')
         this.context = this.canvas.getContext('2d')
         // events
-        var self = this
+        var that = this
         window.addEventListener('keydown', event => {
-            this.keydowns[event.key] = true
+            that.keydowns[event.key] = true
         })
+
         window.addEventListener('keyup', function (event) {
-            self.keydowns[event.key] = false
+            that.keydowns[event.key] = false
+        })
+        //mouse events
+        var moving = false
+        window.addEventListener('mousedown', function (event) {
+            moving = true
+            for (const a of that.mouseActions) {
+                a(event, 'down')
+            }
+        })
+        window.addEventListener('mousemove', function (event) {
+            if (moving) {
+                for (const a of that.mouseActions) {
+                    a(event, 'move')
+                }
+            }
+        })
+        window.addEventListener('mouseup', function (event) {
+            moving = false
+            for (const a of that.mouseActions) {
+                a(event, 'up')
+            }
         })
         this.init()
     }
 
-    // static instance(...args) {
-    //     this.i = this.i || new this(...args)
-    //     return this.i
-    // }
     drawImage(img) {
         //是一个TdImage
-        this.context.drawImage(img.texture, img.x, img.y)
+        this.context.drawImage(img.texture, img.x, img.y, img.w, img.h)
     }
-    // update
     update() {
         this.scene.update()
     }
-    // draw
     draw() {
         this.scene.draw()
     }
-    //
+    //注册按键事件
     registerAction(key, callback) {
         this.actions[key] = callback
+    }
+    //注册鼠标事件
+    registerMouse(callback) {
+        this.mouseActions.push(callback)
     }
     runloop() {
         log(window.fps)
