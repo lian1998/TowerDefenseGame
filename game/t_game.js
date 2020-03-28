@@ -62,7 +62,7 @@ class TdGame {
         this.mouseActions.push(callback)
     }
     runloop() {
-        log(window.fps)
+        // log(window.fps)
         // events
         var g = this
         var actions = Object.keys(g.actions)
@@ -127,7 +127,7 @@ class TdGame {
                 loads.push(1)
                 // log('load images', loads.length, names)
                 if (loads.length == names.length) {
-                    log('load images', g.images)
+                    // log('load images', g.images)
                     g.__start()
                 }
             }

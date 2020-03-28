@@ -11,21 +11,30 @@ class Scene extends TdScene {
         this.setup()
     }
     setup() {
+        this.setupBG()
+        this.setupGamElements()
+        //tower ui
+        this.setupHUD()
+
+        //
+        this.setupInputs()
+    }
+    setupBG() {
         let bg = new TdImage(this.game, 'bg')
         bg.w = 900
         bg.h = 600
         this.addElement(bg)
-        //gun ui
+    }
+    setupGamElements() {
+        let e1 = new Enemy(this.game, 'enemy01')
+        this.addElement(e1)
+    }
+    setupHUD() {
         let gun = new TdImage(this.game, 'gun')
         gun.x = 800
         gun.y = 520
         this.gun = gun
         this.addElement(gun)
-        //
-
-
-        //
-        this.setupInputs()
     }
     //输入指令
     setupInputs() {
