@@ -115,6 +115,13 @@ scene.js
         }
     })
 ```
+## 敌人 
+scene/main/enemy.js
+找到距离最近的敌人并攻击他
+场景中的元素是存在一个数组中的，遍历这个数组判断其是否在攻击范围内，在场景中给塔指定target
+
+### 生命条
+
 
 game.html 画布大小 canvas 3:2   900:600
 
@@ -123,3 +130,32 @@ game.html 画布大小 canvas 3:2   900:600
 把敌人看做点，判断点到圆心的距离是否小于半径
 
 在子弹上加一个属性target以保证子弹不会切换目标
+
+### 寻路
+
+
+## 塔
+tower.js
+旋转 冷却 攻击
+
+拖动放置,只能放在指定格子，需要对x,y进行修正
+scene.js 
+    addTower()
+
+
+
+
+???
+enemy.js
+        console.log(this.scene === this.game.scene);
+
+
+
+
+//TODO 放置塔的bug
+//TODO 攻击范围优化 p21 17:48
+//TODO 小人动画 
+
+
+
+另一种寻路方式 p22 36:34
