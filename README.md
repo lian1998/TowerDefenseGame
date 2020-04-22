@@ -132,6 +132,8 @@ game.html 画布大小 canvas 3:2   900:600
 在子弹上加一个属性target以保证子弹不会切换目标
 
 ### 寻路
+enemy.js
+
 
 
 ## 塔
@@ -143,6 +145,7 @@ scene.js
     addTower()
 
 
+## 地图类
 
 
 ???

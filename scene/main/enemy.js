@@ -1,21 +1,17 @@
 class Enemy extends TdImage {
-    constructor(game, name) {
+    constructor(game, name, tileSize) {
         name = name || 'enemy01'
         super(game, name)
+        this.tileSize = tileSize
         this.setup()
     }
     setup() {
-        // this.stepIndex = 0
-        // this.steps = [
-        //     [0, 170]
-        //     [0, 0]
-        //     [300, 0]
-        //     [300, 170]
-        //     [600, 170]
-        // ]
+        this.map = null
+        this.stepIndex = 0
+        this.steps = []
         this.dead = false
-        this.y = 300
-        this.speed = 3
+        this.y = 200
+        this.speed = 1.5
         this.maxHP = 8
         this.hp = this.maxHP
         this.destinationX = 900
@@ -25,10 +21,46 @@ class Enemy extends TdImage {
         if (this.dead) {
             return
         }
-        this.x += this.speed
-        if (this.x > this.destinationX) {
-            console.log('到达');
+        // this.x += this.speed
+        if (typeof this.stepIndex == 'undefined') {
+            alert('无法放置')
+            return
+        } else {
+            let [dx, dy] = this.steps[this.stepIndex]
+            let signX = dx > this.x ? 1 : -1
+            let signY = dy > this.y ? 1 : -1
+            if (Math.abs(this.x - dx) <= 10) {
+                signX = 0
+            }
+            if (Math.abs(this.y - dy) <= 10) {
+                signY = 0
+            }
+
+            this.x += this.speed * signX
+            this.y += this.speed * signY
+            // console.log(this.speed * signX, this.speed * signY);
+            if (Math.abs(this.x - dx) <= 10 && Math.abs(this.y - dy) <= 10) {
+                console.log('到达');
+                this.stepIndex++
+            }
+
+            //判断是否到达终点
+            if (this.stepIndex == this.steps.length) {
+                console.log('到达终点');
+                this.die()
+            }
+
         }
+    }
+    resetPath(path) {
+        let steps = []
+        let s = this.tileSize
+        for (const p of path) {
+            let c = [p.x * s, p.y * s]
+            steps.push(c)
+        }
+        this.steps = steps
+        this.stepIndex = 0
     }
     drawLifeBar () {
         let context = this.game.context

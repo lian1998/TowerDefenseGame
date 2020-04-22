@@ -35,11 +35,11 @@ var enableDebugMode = function (game, enable) {
 
 var __main = function () {
     var images = {
-        bg: 'img/grasslands_grid.png',
+        bg: 'img/grasslands_grid（900x600）.png',
         enemy01: 'img/soldier.png',
 
         gun: 'img/gun.jpg',
-        tower_gun_0: 'img/tower_gun_1.png',
+        tower_gun_0: 'img/tower_gun(100x100).png',
         // tower_gun_0: 'img/tower_gun_0.png',
     }
     var game = new TdGame(30, images, function (g) {

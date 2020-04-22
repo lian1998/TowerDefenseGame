@@ -21,7 +21,6 @@ class Tower extends TdImage {
         context.arc(v.x, v.y, this.range, 0, Math.PI * 2)
         context.fill()
         super.draw()
-
     }
     fire(target) {
         //检查是否冷却
