@@ -18,7 +18,7 @@ class Scene extends TdScene {
         this.towers = []
         this.setupBG()
         this.setupGameElements()
-        this.setupTower()
+        // this.setupTower()
         //tower ui
         this.setupHUD()
 
@@ -49,6 +49,7 @@ class Scene extends TdScene {
             this.enemies.push(e1)
             e1.map = this.map
         }
+        this.findPathForEnemies()
     }
     addTower(x, y) {
         if(x == null || y == null) {
@@ -101,10 +102,10 @@ class Scene extends TdScene {
             }
         }
     }
-    setupTower() {
-        this.addTower(100, 400)
-        this.addTower(200, 400)
-    }
+    // setupTower() {
+    //     this.addTower(100, 400)
+    //     this.addTower(200, 400)
+    // }
     setupHUD() {
         let gun = new TdImage(this.game, 'gun')
         gun.x = 800
